@@ -1,0 +1,21 @@
+.profile__info-about-me{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    padding: 0px;
+    margin: 0px;
+    margin-top: 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 580px;
+}
+
+@media (min-width:320px) and (max-width:1280px){
+    .profile__info-about-me{
+        font-size:calc((100vw - 320px)/(1280 - 320) * (18 - 14) + 14px);
+        line-height:calc((100vw - 320px)/(1280 - 320) * (22 - 17) + 17px);
+        max-width:calc((100vw - 320px)/(1280 - 320) * (580 - 282) + 282px);
+    }
+}

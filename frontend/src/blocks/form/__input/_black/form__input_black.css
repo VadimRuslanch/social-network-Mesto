@@ -1,0 +1,12 @@
+.form__input_black{
+    color: #CCCCCC;
+    background-color: black;
+    border-bottom: 2px solid #CCCCCC;
+    width: 358px;
+}
+
+@media (min-width:320px) and (max-width:1280px){
+    .form__input_black{
+        width: calc((100vw - 320px)/(1280 - 320) * (358 - 260) + 260px);
+    }
+}
