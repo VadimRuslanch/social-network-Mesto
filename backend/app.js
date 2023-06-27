@@ -1,35 +1,52 @@
 require('dotenv').config();
-
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
-const errorServer = require('./errors/errorServer');
+const routes = require('./routes/index');
+const auth = require('./middlewares/auth');
+const { login, createUser } = require('./controllers/users');
+const { validationCreateUser, validationLogin } = require('./middlewares/validation');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const cors = require('./middlewares/cors');
-const router = require('./routes');
-const config = require('./config');
 
 const app = express();
-
-const startServer = async () => {
-  try {
-    await mongoose.connect(config.MONGO_URL, {
-    });
-    console.log('Подключено к MongoDB');
-    await app.listen(config.PORT);
-    console.log(`Сервер запущен на порте: ${config.PORT}`);
-  } catch (err) {
-    console.log('Ошибка подключения к MongoDB', err);
-  }
-};
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(requestLogger);
-app.use(cors);
-app.use(router);
-app.use(errorLogger);
-app.use(errors());
-app.use(errorServer);
 
-startServer();
+const { PORT = 3000, MONGO_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
+
+app.post('/signin', validationLogin, login);
+app.post('/signup', validationCreateUser, createUser);
+app.use(auth);
+app.use(routes);
+app.use(errorLogger);
+
+async function connect() {
+  try {
+    await mongoose.set('strictQuery', false);
+    await mongoose.connect('mongodb://localhost:27017/mestodb', {
+      family: 4,
+    });
+    // eslint-disable-next-line no-console
+    console.log(`App connected ${MONGO_URL}`);
+    await app.listen(PORT);
+    // eslint-disable-next-line no-console
+    console.log(`App listening on port ${PORT}`);
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.log(err);
+  }
+}
+
+app.use(errors());
+app.use((err, __, res, next) => {
+  // eslint-disable-next-line no-console
+  console.log(err);
+  const { statusCode = 500, message } = err;
+  res.status(statusCode).send({
+    statusCode, message: statusCode === 500 ? 'На сервере произошла ошибка' : message,
+  });
+  next();
+});
+
+connect();
