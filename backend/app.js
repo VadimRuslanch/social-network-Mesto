@@ -5,16 +5,15 @@ const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const errorServer = require('./errors/errorServer');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const cors = require('./middlewares/corsErr');
-const routes = require('./routes/index');
+const cors = require('./middlewares/cors');
+const router = require('./routes');
 const config = require('./config');
 
 const app = express();
 
 const startServer = async () => {
   try {
-    await mongoose.connect(config.MONGODB_URI, {
-      useNewUrlParser: true,
+    await mongoose.connect(config.MONGO_URL, {
     });
     console.log('Подключено к MongoDB');
     await app.listen(config.PORT);
@@ -28,7 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(requestLogger);
 app.use(cors);
-app.use(routes);
+app.use(router);
 app.use(errorLogger);
 app.use(errors());
 app.use(errorServer);
