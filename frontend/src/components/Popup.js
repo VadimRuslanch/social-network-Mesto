@@ -8,7 +8,7 @@ export default function Popup({ isOpen, name, onClose, children }) {
         }
         document.addEventListener('keydown', closeByEscape);
         return () => document.removeEventListener('keydown', closeByEscape);
-    }, [[isOpen, onClose]]);
+    }, [isOpen, onClose]);
 
     function handleOverlay(e) {
         if (e.target === e.currentTarget) {

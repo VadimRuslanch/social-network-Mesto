@@ -1,6 +1,5 @@
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import { useContext } from "react";
-import DelitePopup from "./DelitePopup.js";
 
 export default function Cards({ card, onCardClick, onCardLike, onDeliteClick }) {
     const currentUser = useContext(CurrentUserContext);

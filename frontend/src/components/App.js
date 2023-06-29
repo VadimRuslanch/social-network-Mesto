@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import ProtectedRoute from './ProtectedRoute.js';
@@ -44,6 +43,7 @@ export default function App() {
       .catch(res => { throw new Error(res.message) })
     const token = localStorage.getItem("token");
     if (token) {
+      
       auth
         .checkToken(token)
         .then((res) => {

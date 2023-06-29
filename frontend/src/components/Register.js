@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import Header from "./Header";
 import AuthForm from "./AuthForm";
 
 export default function Register({ onRegister }) {
