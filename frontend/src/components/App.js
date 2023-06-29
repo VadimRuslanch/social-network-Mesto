@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
