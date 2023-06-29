@@ -28,7 +28,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         setFormValue({
             name, about
         });
-    }, [isOpen]);
+    }, [currentUser, isOpen]); //Изменения по eslint, возможна ошибка
 
     return (
         <>

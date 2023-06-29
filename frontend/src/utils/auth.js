@@ -9,7 +9,6 @@ class Api {
     }
     // Регистрация пользователя
     register({ password, email }) {
-        console.log(`${this._baseUrl}/signup`)
         return fetch(`${this._baseUrl}/signup`, {
             method: 'POST',
             headers: {
@@ -22,7 +21,6 @@ class Api {
     };
     // Авторизация пользователя
     authorization({ password, email }) {
-        console.log(`${this._baseUrl}/signin`)
         return fetch(`${this._baseUrl}/signin`, {
             method: "POST",
             headers: {
