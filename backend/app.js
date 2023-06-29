@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const routes = require('./routes/index');
@@ -8,8 +9,10 @@ const auth = require('./middlewares/auth');
 const { login, createUser } = require('./controllers/users');
 const { validationCreateUser, validationLogin } = require('./middlewares/validation');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const corsErr = require('./middlewares/corsErr');
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 app.use(requestLogger);
 
@@ -20,6 +23,7 @@ app.post('/signup', validationCreateUser, createUser);
 app.use(auth);
 app.use(routes);
 app.use(errorLogger);
+app.use(corsErr);
 
 async function connect() {
   try {

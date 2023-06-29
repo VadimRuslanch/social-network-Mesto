@@ -8,7 +8,7 @@ export default function InfoTooltip({ isOpen, onClose, isRegister }) {
             name='tooltip'
             isOpen={isOpen}
             onClose={onClose} >
-            <img className='popup__icon' src={isRegister ? icon_successful : icon_not_successful} />
+            <img className='popup__icon' alt='Иконка регистрации' src={isRegister ? icon_successful : icon_not_successful} />
             <h2 className="popup__title">{isRegister ? "Вы успешно зарегистрировались!" : "Что-то пошло не так! Попробуйте ещё раз."}</h2>
         </PopupWithForm>
     )
