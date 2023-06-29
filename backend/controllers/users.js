@@ -5,7 +5,7 @@ const User = require('../models/user');
 const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
-const JWT_SECRET = require('../config');
+const { JWT_SECRET } = require('../config');
 
 // Поиск всех пользователей
 const getUsers = (req, res, next) => {
@@ -119,6 +119,7 @@ const createUser = (req, res, next) => {
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
+  console.log(JWT_SECRET);
 
   User
     .findUserByCredentials(email, password)
