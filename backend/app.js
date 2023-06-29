@@ -4,20 +4,23 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
-const routes = require('./routes/index');
-const auth = require('./middlewares/auth');
+
 const { login, createUser } = require('./controllers/users');
-const { validationCreateUser, validationLogin } = require('./middlewares/validation');
+const routes = require('./routes/index');
+
+const auth = require('./middlewares/auth');
 const corsErr = require('./middlewares/corsErr');
+const { validationCreateUser, validationLogin } = require('./middlewares/validation');
+
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+
+const { PORT = 3000, MONGO_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+
 app.use(requestLogger);
-
-const { PORT = 3000, MONGO_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
-
 app.post('/signin', validationLogin, login);
 app.post('/signup', validationCreateUser, createUser);
 app.use(auth);
