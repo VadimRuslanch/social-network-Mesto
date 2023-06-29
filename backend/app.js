@@ -1,15 +1,18 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const routes = require('./routes/index');
 const auth = require('./middlewares/auth');
 const { login, createUser } = require('./controllers/users');
 const { validationCreateUser, validationLogin } = require('./middlewares/validation');
+const corsErr = require('./middlewares/corsErr');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 app.use(requestLogger);
 
@@ -19,6 +22,7 @@ app.post('/signin', validationLogin, login);
 app.post('/signup', validationCreateUser, createUser);
 app.use(auth);
 app.use(routes);
+app.use(corsErr);
 app.use(errorLogger);
 
 async function connect() {
@@ -27,20 +31,16 @@ async function connect() {
     await mongoose.connect('mongodb://localhost:27017/mestodb', {
       family: 4,
     });
-    // eslint-disable-next-line no-console
     console.log(`App connected ${MONGO_URL}`);
     await app.listen(PORT);
-    // eslint-disable-next-line no-console
     console.log(`App listening on port ${PORT}`);
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.log(err);
   }
 }
 
 app.use(errors());
 app.use((err, __, res, next) => {
-  // eslint-disable-next-line no-console
   console.log(err);
   const { statusCode = 500, message } = err;
   res.status(statusCode).send({

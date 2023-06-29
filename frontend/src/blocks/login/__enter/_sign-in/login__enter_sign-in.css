@@ -1,0 +1,5 @@
+.login__enter_sign-in:hover {
+    opacity: 0.6;
+    transition: opacity 0.2s linear;
+    cursor: pointer;
+}

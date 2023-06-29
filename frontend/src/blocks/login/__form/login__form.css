@@ -1,0 +1,5 @@
+.login__form{
+    display: flex;
+    flex-flow: column;
+    margin: 50px 0 0px;
+}

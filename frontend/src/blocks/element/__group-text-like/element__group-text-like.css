@@ -1,0 +1,8 @@
+.element__group-text-like{
+    list-style-type: none;
+    padding: 25px 15px 31px 21px;
+    margin: 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
