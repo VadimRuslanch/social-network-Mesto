@@ -27,10 +27,10 @@ export default function Register({ onRegister }) {
             onChange={handleChange}
             onSubmit={handleSubmit}
             formValue={formValue}
-            elementHeader={<Link className="header__button-login" to='/sign-in'>Войти</Link>}
+            elementHeader={<Link className="header__button-login" to='/signin'>Войти</Link>}
             textLogin='Регистрация'
             textBtn='Зарегистрироваться'
-            element={< p className="login__enter" > Уже зарегистрированы ? <Link className="login__enter login__enter_sign-in" to="/sign-in">Войти</Link></p >}
+            element={< p className="login__enter" > Уже зарегистрированы ? <Link className="login__enter login__enter_sign-in" to="/signin">Войти</Link></p >}
         />
     )
 }

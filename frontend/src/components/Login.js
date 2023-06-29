@@ -27,7 +27,7 @@ export default function Login({ onLogin }) {
             onChange={handleChange}
             onSubmit={handleSubmit}
             formValue={formValue}
-            elementHeader={<Link className="header__button-login" to='/sign-up'>Регистрация</Link>}
+            elementHeader={<Link className="header__button-login" to='/signup'>Регистрация</Link>}
             textLogin='Вход'
             textBtn='Войти'
         />

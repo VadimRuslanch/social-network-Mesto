@@ -73,7 +73,7 @@ export default function App() {
   function handleLogout() {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
-    navigate('/sign-in')
+    navigate('/signin')
   }
 
   function handleRegister(userData) {
@@ -197,10 +197,10 @@ export default function App() {
           }
         />
         <Route
-          path='/sign-up'
+          path='/signup'
           element={<Register onRegister={handleRegister} />} />
         <Route
-          path='/sign-in'
+          path='/signin'
           element={<Login onLogin={handleLogin} />} />
       </Routes>
       <EditProfilePopup

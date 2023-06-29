@@ -5,6 +5,6 @@ export default function ProtectedRouteElement({ onloggedIn, element }) {
     if (onloggedIn) {
         return element
     } else {
-        return <Navigate to="/sign-in" replace />
+        return <Navigate to="/signin" replace />
     }
 }

@@ -12,7 +12,7 @@ export default function Main({ cards, email, onEditProfile, onAddPlace, onEditAv
             <Header element={
                 <div className="header__profile">
                     <p className="header__email">{email}</p>
-                    <Link className="header__button-exit" onClick={onSignOut} to='/sign-in'>Выйти</Link>
+                    <Link className="header__button-exit" onClick={onSignOut} to='/signin'>Выйти</Link>
                 </div>
             } />
 
