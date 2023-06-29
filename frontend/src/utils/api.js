@@ -110,10 +110,10 @@ class Api {
 };
 
 const api = new Api({
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-49',
+    baseUrl: '"https://api.vadim-lebedev.mesto.nomoreparties.sbs',
     headers: {
-        authorization: '278ad23c-54e7-41b4-b653-b024325dde52',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'authorization': `Bearer ${localStorage.getItem('jwt')}`,
     }
 });
 
