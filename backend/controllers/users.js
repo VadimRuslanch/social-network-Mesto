@@ -5,8 +5,7 @@ const User = require('../models/user');
 const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
-
-const { NODE_ENV, JWT_SECRET = 'dev-secret' } = process.env;
+const JWT_SECRET = require('../config');
 
 // Поиск всех пользователей
 const getUsers = (req, res, next) => {
@@ -107,13 +106,12 @@ const createUser = (req, res, next) => {
           },
         },
       ))
-      // eslint-disable-next-line consistent-return
       .catch((err) => {
         if (err.code === 11000) {
           return next(new ConflictError('Пользователь с таким электронным адресом уже существует'));
         } if (err.name === 'ValidationError') {
           return next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
-        } next(err);
+        } return next(err);
       });
   })
     .catch(next);
@@ -125,11 +123,7 @@ const login = (req, res, next) => {
   User
     .findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign(
-        { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'dev-key',
-        { expiresIn: '7d' },
-      );
+      const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
       res
         .cookie('jwt', token, {
           maxAge: (7 * 24 * 60 * 60),
