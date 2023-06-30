@@ -48,6 +48,8 @@ export default function App() {
       auth
         .checkToken(token)
         .then((res) => {
+          console.log(token);
+          console.log(res);
           setIsLoggedIn(true);
           setEmail(res.data.email);
           navigate('/');

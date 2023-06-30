@@ -8,25 +8,25 @@ class Api {
             .then((res) => { throw new Error(res.message) });
     }
     // Регистрация пользователя
-    register({ password, email }) {
+    register({email, password }) {
         return fetch(`${this._baseUrl}/signup`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ password, email })
+            body: JSON.stringify({email, password })
         })
             .then(res => { return res })
             .catch(res => { return this._getErrorFromServer(res) })
     };
     // Авторизация пользователя
-    authorization({ password, email }) {
+    authorization({email, password }) {
         return fetch(`${this._baseUrl}/signin`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ password, email })
+            body: JSON.stringify({email, password })
         })
             .then(res => { return res.json() })
             .catch(res => { return this._getErrorFromServer(res) })
