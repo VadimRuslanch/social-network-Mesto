@@ -42,7 +42,10 @@ export default function App() {
       })
       .catch(res => { throw new Error(res.message) })
     const token = localStorage.getItem("token");
+    
+    console.log(token);
     if (token) {
+      console.log(token)
       
       auth
         .checkToken(token)

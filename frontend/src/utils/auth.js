@@ -21,6 +21,7 @@ class Api {
     };
     // Авторизация пользователя
     authorization({ password, email }) {
+        // console.log({ password, email })
         return fetch(`${this._baseUrl}/signin`, {
             method: "POST",
             headers: {
