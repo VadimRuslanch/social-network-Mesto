@@ -126,7 +126,6 @@ const login = async (req, res, next) => {
     );
 
     res.send({ token });
-    console.log({ token });
   } catch (err) {
     next(err);
   }

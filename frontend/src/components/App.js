@@ -41,12 +41,10 @@ export default function App() {
         setCards(initialCards)
       })
       .catch(res => { throw new Error(res.message) })
+
     const token = localStorage.getItem("token");
-    
-    console.log(token);
+
     if (token) {
-      console.log(token)
-      
       auth
         .checkToken(token)
         .then((res) => {
