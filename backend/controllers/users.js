@@ -115,28 +115,45 @@ const createUser = async (req, res, next) => {
   }
 };
 
-const login = (req, res, next) => {
-  const { email, password } = req.body;
+const login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findUserByCredentials(email, password);
+    const token = jwt.sign(
+      { _id: user._id },
+      JWT_SECRET,
+      { expiresIn: '7d' },
+    );
 
-  User
-    .findUserByCredentials(email, password)
-    .then((user) => {
-      const token = jwt.sign(
-        { _id: user._id },
-        JWT_SECRET,
-        { expiresIn: '7d' },
-      );
-      res
-        .cookie('jwt', token, {
-          maxAge: (7 * 24 * 60 * 60),
-          httpOnly: true,
-          sameSite: true,
-        })
-        .send({ message: 'Вы успешно авторизовались!' })
-        .end();
-    })
-    .catch(next);
+    res.send({ token });
+    console.log({ token });
+  } catch (err) {
+    next(err);
+  }
 };
+
+// const login1 = (req, res, next) => {
+//   const { email, password } = req.body;
+
+//   User
+//     .findUserByCredentials(email, password)
+//     .then((user) => {
+//       const token = jwt.sign(
+//         { _id: user._id },
+//         JWT_SECRET,
+//         { expiresIn: '7d' },
+//       );
+//       res
+//         .cookie('jwt', token, {
+//           maxAge: (7 * 24 * 60 * 60),
+//           httpOnly: true,
+//           sameSite: true,
+//         })
+//         .send({ message: 'Вы успешно авторизовались!' })
+//         .end();
+//     })
+//     .catch(next);
+// };
 
 module.exports = {
   getUsers,
