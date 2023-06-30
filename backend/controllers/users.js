@@ -89,32 +89,30 @@ const getCurrentUser = (req, res, next) => {
     });
 };
 
-const createUser = (req, res, next) => {
-  const {
-    name, about, avatar, email, password,
-  } = req.body;
-
-  bcrypt.hash(password, 10).then((hash) => {
-    User
-      .create({
-        name, about, avatar, email, password: hash,
-      })
-      .then(() => res.status(201).send(
-        {
-          data: {
-            name, about, avatar, email,
-          },
-        },
-      ))
-      .catch((err) => {
-        if (err.code === 11000) {
-          return next(new ConflictError('Пользователь с таким электронным адресом уже существует'));
-        } if (err.name === 'ValidationError') {
-          return next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
-        } return next(err);
-      });
-  })
-    .catch(next);
+const createUser = async (req, res, next) => {
+  try {
+    const {
+      name, about, avatar, email, password,
+    } = req.body;
+    const hash = await bcrypt.hash(password, 10);
+    const user = await User.create({
+      name, about, avatar, email, password: hash,
+    });
+    res.status(201).send({
+      name: user.name,
+      about: user.about,
+      avatar: user.avatar,
+      email: user.email,
+    });
+  } catch (err) {
+    if (err.code === 11000) {
+      next(new ConflictError('Пользователь с таким электронным адресом уже существует'));
+    } else if (err.name === 'ValidationError') {
+      next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
+    } else {
+      next(err);
+    }
+  }
 };
 
 const login = (req, res, next) => {
