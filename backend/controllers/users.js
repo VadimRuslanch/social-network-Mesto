@@ -4,7 +4,7 @@ const User = require('../models/user');
 const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
-const { JWT_SECRET } = require('../config');
+const config = require('../config');
 
 // Поиск всех пользователей
 const getUsers = async (req, res, next) => {
@@ -73,7 +73,7 @@ const login = async (req, res, next) => {
     const user = await User.findUserByCredentials(email, password);
     const token = jwt.sign(
       { _id: user._id },
-      JWT_SECRET,
+      config.JWT_SECRET,
       { expiresIn: '7d' },
     );
 

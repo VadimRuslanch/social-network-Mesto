@@ -40,14 +40,13 @@ class Api {
 
     // Удаление карточки
     deleteCard(cardId) {
-        console.log(cardId)
-        return fetch(`${this._url}/cards/${cardId}/`, {
+        return fetch(`${this._url}/cards/${cardId}`, {
             method: "DELETE",
             headers: this._headers
         })
             .then(res => { return res.json() })
             .catch(res => { return this._getErrorFromServer(res) })
-    }
+    };
 
     // Добавление новой карточки
     addCard(cardData) {

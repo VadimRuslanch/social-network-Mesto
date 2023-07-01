@@ -9,18 +9,18 @@ const handleError = require('./middlewares/handleError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const corsErr = require('./middlewares/cors');
 const router = require('./routes');
-const { MONGODB_URI, PORT } = require('./config');
+const config = require('./config');
 
 const app = express();
 
 const startServer = async () => {
   try {
-    await mongoose.connect(MONGODB_URI, {
+    await mongoose.connect(config.MONGODB_URI, {
       family: 4,
     });
     console.log('Подключено к MongoDB');
-    await app.listen(PORT);
-    console.log(`Сервер запущен на порте: ${PORT}`);
+    await app.listen(config.PORT);
+    console.log(`Сервер запущен на порте: ${config.PORT}`);
   } catch (err) {
     console.log('Ошибка подключения к MongoDB', err);
   }
