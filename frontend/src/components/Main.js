@@ -60,12 +60,14 @@ export default function Main({ cards, email, onEditProfile, onAddPlace, onEditAv
                     </button>
                 </section>
                 <section className="elements">
-                    {cards.map((card) => (<Cards
-                        key={card._id}
-                        card={card}
-                        onCardClick={onCardClick}
-                        onCardLike={onCardLike}
-                        onDeliteClick={onDeliteClick} />)
+                    {cards.map((card) => (
+                        <Cards
+                            key={card._id}
+                            card={card}
+                            onCardClick={onCardClick}
+                            onCardLike={onCardLike}
+                            onDeliteClick={onDeliteClick} />
+                    )
                     )}
                 </section>
             </main>

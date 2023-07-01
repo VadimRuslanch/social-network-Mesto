@@ -2,12 +2,12 @@ require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
-// const bodyParser = require('body-parser');
-// const cors = require('cors');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const { errors } = require('celebrate');
 const handleError = require('./middlewares/handleError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const cors = require('./middlewares/cors');
+const corsErr = require('./middlewares/cors');
 const router = require('./routes');
 const { MONGODB_URI, PORT } = require('./config');
 
@@ -26,12 +26,12 @@ const startServer = async () => {
   }
 };
 
-// app.use(cors());
-// app.use(bodyParser.json());
+app.use(cors());
+app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(requestLogger);
-app.use(cors);
+app.use(corsErr);
 app.use(router);
 app.use(errorLogger);
 app.use(errors());

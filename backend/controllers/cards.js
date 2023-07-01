@@ -58,7 +58,7 @@ const handleCardLike = async (req, res, next) => {
     if (req.method === 'DELETE') {
       action = '$pull';
     }
-
+    console.log(req.params.id);
     const card = await Card.findByIdAndUpdate(
       req.params.id,
       { [action]: { likes: req.user._id } },
