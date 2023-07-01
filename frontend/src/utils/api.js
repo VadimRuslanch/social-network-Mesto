@@ -13,7 +13,6 @@ class Api {
 
     // Управление лайком карточки
     _setLike(cardId) {
-        console.log(cardId);
         return fetch(`${this._url}/cards/${cardId}/likes`, {
             method: 'PUT',
             headers: this._headers

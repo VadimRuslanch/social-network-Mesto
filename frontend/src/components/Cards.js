@@ -3,9 +3,10 @@ import { useContext } from "react";
 
 export default function Cards({ card, onCardClick, onCardLike, onDeliteClick }) {
     const currentUser = useContext(CurrentUserContext);
-    const isOwn = card.owner._id === currentUser._id;
+    const isOwn = card.owner === currentUser._id;
     const isLiked = card.likes.some((person) => person._id === currentUser._id);
-
+    const cardLikeButtonClassName = `element__like ${(isLiked && "element__like_active") || ""}`;
+    console.log(card);
     function handleImageClick() {
         onCardClick(card);
     };
@@ -39,7 +40,7 @@ export default function Cards({ card, onCardClick, onCardLike, onDeliteClick }) 
                 </h2>
                 <div className="element__likes">
                     <button
-                        className={`element__like ${isLiked && 'element__like_active'}`}
+                        className={cardLikeButtonClassName}
                         onClick={handleLikeClick} />
                     <span className="element__likes-number">{card.likes.length}</span>
                 </div>
