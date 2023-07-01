@@ -7,6 +7,8 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 export default function Main({ cards, email, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, onDeliteClick, onSignOut }) {
     const currentUser = useContext(CurrentUserContext);
 
+    console.log(cards);
+
     return (
         <>
             <Header element={

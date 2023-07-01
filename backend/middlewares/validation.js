@@ -63,7 +63,7 @@ const validationCreateCard = celebrate({
 // поиск карточки по Id
 const validationCardById = celebrate({
   params: Joi.object().keys({
-    cardId: Joi.string().required().custom(validationID),
+    id: Joi.string().hex().length(24).required(),
   }),
 });
 
