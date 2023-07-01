@@ -7,19 +7,15 @@ const auth = (req, res, next) => {
   if (!authorization || !authorization.startsWith('Bearer ')) {
     return next(new UnauthorizedError('Необходима авторизация'));
   }
-  const token = req.cookies.jwt;
+  const token = authorization.replace('Bearer ', '');
   let payload;
 
   try {
-    payload = jwt.verify(
-      token,
-      JWT_SECRET,
-    );
+    payload = jwt.verify(token, JWT_SECRET);
+    req.user = payload;
   } catch (err) {
-    return next(new UnauthorizedError('Неверный электронный адрес или пароль'));
+    return next(new UnauthorizedError('Необходима авторизация'));
   }
-
-  req.user = payload;
 
   return next();
 };
