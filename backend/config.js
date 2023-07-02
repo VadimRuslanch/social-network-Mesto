@@ -5,6 +5,8 @@ const {
   PORT,
 } = process.env;
 
+console.log(NODE_ENV);
+
 const config = {
   MONGODB_URI: NODE_ENV === 'production' ? MONGODB_URI : 'mongodb://localhost:27017/mestodb',
   PORT: NODE_ENV === 'production' ? PORT : 3000,

@@ -24,6 +24,10 @@ const getCards = async (req, res, next) => {
 };
 
 const deleteCard = async (req, res, next) => {
+  console.log(req);
+  console.log(req.params);
+  console.log(req.user);
+
   try {
     const card = await Card.findById(req.params.id);
 
