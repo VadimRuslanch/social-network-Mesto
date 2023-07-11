@@ -2,12 +2,10 @@ require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const cors = require('cors');
 const { errors } = require('celebrate');
 const handleError = require('./middlewares/handleError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const corsErr = require('./middlewares/cors');
+const cors = require('./middlewares/cors');
 const router = require('./routes');
 const config = require('./config');
 
@@ -18,20 +16,21 @@ const startServer = async () => {
     await mongoose.connect(config.MONGODB_URI, {
       family: 4,
     });
+    // eslint-disable-next-line no-console
     console.log('Подключено к MongoDB');
     await app.listen(config.PORT);
+    // eslint-disable-next-line no-console
     console.log(`Сервер запущен на порте: ${config.PORT}`);
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.log('Ошибка подключения к MongoDB', err);
   }
 };
 
-app.use(cors());
-app.use(corsErr);
-app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(requestLogger);
+app.use(cors);
 app.use(router);
 app.use(errorLogger);
 app.use(errors());

@@ -112,10 +112,10 @@ class Api {
 };
 
 const api = new Api({
-    url: 'https://api.vadim-lebedev.mesto.nomoreparties.sbs',
+    url: 'http://api.vadim-lebedev.mesto.nomoreparties.sbs',
     headers: {
         'Content-Type': 'application/json',
-        'authorization': `Bearer ${'jwt'}`,
+        'authorization': localStorage.getItem("jwt"),
     }
 });
 
