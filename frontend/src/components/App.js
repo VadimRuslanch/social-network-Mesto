@@ -42,11 +42,12 @@ export default function App() {
       })
       .catch(res => { throw new Error(res.message) })
 
-    const token = localStorage.getItem("token");
+      const jwt = localStorage.getItem("jwt");
+      console.log(jwt)
 
-    if (token) {
+    if (jwt) {
       auth
-        .checkToken(token)
+        .checkToken(jwt)
         .then((res) => {
           setIsLoggedIn(true);
           setEmail(res.email);
@@ -61,7 +62,7 @@ export default function App() {
       .authorization(userData)
       .then((res) => {
         if (res.token) {
-          localStorage.setItem('token', res.token);
+          localStorage.setItem('jwt', res.token);
           setIsLoggedIn(true);
           navigate('/');
         } else {
@@ -72,7 +73,7 @@ export default function App() {
   };
 
   function handleLogout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('jwt');
     setIsLoggedIn(false);
     navigate('/signin')
   }

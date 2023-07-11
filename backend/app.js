@@ -27,11 +27,11 @@ const startServer = async () => {
 };
 
 app.use(cors());
+app.use(corsErr);
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(requestLogger);
-app.use(corsErr);
 app.use(router);
 app.use(errorLogger);
 app.use(errors());
