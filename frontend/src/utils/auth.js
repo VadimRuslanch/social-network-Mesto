@@ -46,7 +46,9 @@ class Api {
 };
 
 const auth = new Api({
-    baseUrl: 'http://api.vadim-lebedev.mesto.nomoreparties.sbs',
+    // baseUrl: 'https://api.vadim-lebedev.mesto.nomoreparties.sbs',
+    baseUrl: 'http://localhost:3000/',
+
 });
 
 export default auth;

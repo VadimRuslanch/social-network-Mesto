@@ -40,7 +40,7 @@ export default function App() {
         setCurrentUser(userData)
         setCards(initialCards)
       })
-      .catch(res => { throw new Error(res.message) })
+      .catch(err => { throw new Error(err.message) })
 
       const token = localStorage.getItem("token");
 
@@ -52,7 +52,7 @@ export default function App() {
           setEmail(res.email);
           navigate('/');
         })
-        .catch(res => { throw new Error(res.message) });
+        .catch(err => { throw new Error(err.message) });
     }
   }, [setCurrentUser, setCards, setIsLoggedIn, setEmail, navigate])
 

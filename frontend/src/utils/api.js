@@ -5,7 +5,7 @@ class Api {
     };
 
     _getErrorFromServer(res) {
-        return res.json()
+        return res
             .then((res) => {
                 throw new Error(res.message);
             });
@@ -112,10 +112,12 @@ class Api {
 };
 
 const api = new Api({
-    url: 'http://api.vadim-lebedev.mesto.nomoreparties.sbs',
+    // url: 'https://api.vadim-lebedev.mesto.nomoreparties.sbs',
+    url: 'http://localhost:3000/',
+
     headers: {
         'Content-Type': 'application/json',
-        'authorization': localStorage.getItem("jwt"),
+        'authorization': localStorage.getItem("token"),
     }
 });
 
