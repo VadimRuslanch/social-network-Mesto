@@ -18,6 +18,7 @@ const createCard = async (req, res, next) => {
 
 const getCards = async (req, res, next) => {
   try {
+    console.log(Card.find({}));
     const cards = await Card.find({});
     res.send(cards);
   } catch (err) { next(err); }
@@ -58,13 +59,11 @@ const handleCardLike = async (req, res, next) => {
     if (req.method === 'DELETE') {
       action = '$pull';
     }
-    console.log(req.user.id);
     const card = await Card.findByIdAndUpdate(
       req.params.id,
       { [action]: { likes: req.user._id } },
       { new: true },
     );
-    console.log(card);
     if (!card) {
       throw new NotFoundError('Передан несуществующий _id карточки.');
     }

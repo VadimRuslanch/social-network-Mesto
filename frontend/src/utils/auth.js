@@ -1,6 +1,6 @@
 class Api {
-    constructor({ baseUrl }) {
-        this._baseUrl = baseUrl;
+    constructor({ url }) {
+        this._url = url;
     };
 
     _getErrorFromServer(res) {
@@ -8,32 +8,32 @@ class Api {
             .then((res) => { throw new Error(res.message) });
     }
     // Регистрация пользователя
-    register({email, password }) {
-        return fetch(`${this._baseUrl}/signup`, {
+    register({ email, password }) {
+        return fetch(`${this._url}/signup`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({email, password })
+            body: JSON.stringify({ email, password })
         })
             .then(res => { return res })
             .catch(res => { return this._getErrorFromServer(res) })
     };
     // Авторизация пользователя
-    authorization({email, password }) {
-        return fetch(`${this._baseUrl}/signin`, {
+    authorization({ email, password }) {
+        return fetch(`${this._url}/signin`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({email, password })
+            body: JSON.stringify({ email, password })
         })
             .then(res => { return res.json() })
             .catch(res => { return this._getErrorFromServer(res) })
     };
     // Проверка токена пользователя для автологина
     checkToken(token) {
-        return fetch(`${this._baseUrl}/users/me`, {
+        return fetch(`${this._url}/users/me`, {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",
@@ -46,7 +46,7 @@ class Api {
 };
 
 const auth = new Api({
-    baseUrl: 'https://api.vadim-lebedev.mesto.nomoreparties.sbs',
+    url: 'https://api.vadim-lebedev.mesto.nomoreparties.sbs',
 });
 
 export default auth;

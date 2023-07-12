@@ -50,7 +50,7 @@ class Api {
 
     // Добавление новой карточки
     addCard(cardData) {
-        return fetch(`${this._url}/cards`, {
+        return fetch(`${this._url}/cards/`, {
             method: "POST",
             headers: this._headers,
             body: JSON.stringify({
@@ -92,7 +92,7 @@ class Api {
 
     // загрузка карточек с сервера
     getCardsList() {
-        return fetch(`${this._url}/cards`, {
+        return fetch(`${this._url}/cards/`, {
             headers: this._headers
         })
             .then(res => { return res.json() })
@@ -113,7 +113,6 @@ class Api {
 
 const api = new Api({
     url: 'https://api.vadim-lebedev.mesto.nomoreparties.sbs',
-
     headers: {
         'Content-Type': 'application/json',
         'authorization': localStorage.getItem("token"),
