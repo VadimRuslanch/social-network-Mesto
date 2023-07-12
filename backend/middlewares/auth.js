@@ -3,6 +3,7 @@ const UnauthorizedError = require('../errors/UnauthorizedError');
 const config = require('../config');
 
 const auth = (req, res, next) => {
+  console.log(req);
   const { authorization } = req.headers;
   if (!authorization || !authorization.startsWith('Bearer ')) {
     return next(new UnauthorizedError('Необходима авторизация'));

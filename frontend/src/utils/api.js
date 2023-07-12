@@ -112,8 +112,7 @@ class Api {
 };
 
 const api = new Api({
-    // url: 'https://api.vadim-lebedev.mesto.nomoreparties.sbs',
-    url: 'http://localhost:3000/',
+    url: 'https://api.vadim-lebedev.mesto.nomoreparties.sbs',
 
     headers: {
         'Content-Type': 'application/json',
