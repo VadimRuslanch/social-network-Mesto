@@ -13,18 +13,20 @@ class Api {
 
     // Управление лайком карточки
     _setLike(cardId) {
-        return fetch(`${this._url}/cards/${cardId}/likes`, {
+        return fetch(`${this._url}cards/${cardId}/likes`, {
             method: 'PUT',
-            headers: this._headers
+            headers: this._headers,
+            credentials: 'include',
         })
             .then(res => { return res.json() })
             .catch(res => { return this._getErrorFromServer(res) })
     };
 
     _deleteLike(cardId) {
-        return fetch(`${this._url}/cards/${cardId}/likes`, {
+        return fetch(`${this._url}cards/${cardId}/likes`, {
             method: 'DELETE',
-            headers: this._headers
+            headers: this._headers,
+            credentials: 'include',
         })
             .then(res => { return res.json() })
             .catch(res => { return this._getErrorFromServer(res) })
@@ -40,9 +42,10 @@ class Api {
 
     // Удаление карточки
     deleteCard(cardId) {
-        return fetch(`${this._url}/cards/${cardId}`, {
+        return fetch(`${this._url}cards/${cardId}`, {
             method: "DELETE",
-            headers: this._headers
+            headers: this._headers,
+            credentials: 'include',
         })
             .then(res => { return res.json() })
             .catch(res => { return this._getErrorFromServer(res) })
@@ -50,9 +53,10 @@ class Api {
 
     // Добавление новой карточки
     addCard(cardData) {
-        return fetch(`${this._url}/cards/`, {
+        return fetch(`${this._url}cards/`, {
             method: "POST",
             headers: this._headers,
+            credentials: 'include',
             body: JSON.stringify({
                 name: cardData.name,
                 link: cardData.link
@@ -64,9 +68,10 @@ class Api {
 
     // Редактирует аватар пользователя
     setUserAvatar(link) {
-        return fetch(`${this._url}/users/me/avatar`, {
+        return fetch(`${this._url}users/me/avatar`, {
             method: "PATCH",
             headers: this._headers,
+            credentials: 'include',
             body: JSON.stringify({
                 avatar: link
             })
@@ -77,9 +82,10 @@ class Api {
 
     // Редактирует информацию профиля
     setUserInfo(userInfo) {
-        return fetch(`${this._url}/users/me`, {
+        return fetch(`${this._url}users/me`, {
             method: "PATCH",
             headers: this._headers,
+            credentials: 'include',
             body: JSON.stringify({
                 name: userInfo.name,
                 about: userInfo.about,
@@ -92,8 +98,10 @@ class Api {
 
     // загрузка карточек с сервера
     getCardsList() {
-        return fetch(`${this._url}/cards/`, {
-            headers: this._headers
+        return fetch(`${this._url}cards`, {
+            method: "GET",
+            headers: this._headers,
+            credentials: 'include',
         })
             .then(res => { return res.json() })
             .catch(res => { return this._getErrorFromServer(res) })
@@ -101,8 +109,10 @@ class Api {
 
     // Загрузка информации о пользователе с сервера
     getUserInfo() {
-        return fetch(`${this._url}/users/me`, {
-            headers: this._headers
+        return fetch(`${this._url}users/me`, {
+            method: "GET",
+            headers: this._headers,
+            credentials: 'include',
         })
             .then(res => {
                 return res.json()
@@ -112,10 +122,10 @@ class Api {
 };
 
 const api = new Api({
-    url: 'https://api.vadim-lebedev.mesto.nomoreparties.sbs',
+    url: 'http://localhost:4000/',
+    // url: 'https://api.vadim-lebedev.mesto.nomoreparties.sbs',
     headers: {
         'Content-Type': 'application/json',
-        'authorization': localStorage.getItem("token"),
     }
 });
 

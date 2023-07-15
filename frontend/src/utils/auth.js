@@ -9,36 +9,39 @@ class Api {
     }
     // Регистрация пользователя
     register({ email, password }) {
-        return fetch(`${this._url}/signup`, {
+        return fetch(`${this._url}signup`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ email, password })
+            credentials: 'include',
+            body: JSON.stringify({ email, password }),
         })
             .then(res => { return res })
             .catch(res => { return this._getErrorFromServer(res) })
     };
     // Авторизация пользователя
     authorization({ email, password }) {
-        return fetch(`${this._url}/signin`, {
+        return fetch(`${this._url}signin`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ email, password })
+            credentials: 'include',
+            body: JSON.stringify({ email, password }),
         })
             .then(res => { return res.json() })
             .catch(res => { return this._getErrorFromServer(res) })
     };
     // Проверка токена пользователя для автологина
-    checkToken(token) {
-        return fetch(`${this._url}/users/me`, {
+    checkToken() {
+        return fetch(`${this._url}users/me`, {
             method: 'GET',
             headers: {
+                "Accept": "application/json",
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
+            },
+            credentials: 'include',
         })
             .then(res => { if (res.ok) return res.json() })
             .catch(res => { return this._getErrorFromServer(res) })
@@ -46,7 +49,9 @@ class Api {
 };
 
 const auth = new Api({
-    url: 'https://api.vadim-lebedev.mesto.nomoreparties.sbs',
+    // url: 'https://api.vadim-lebedev.mesto.nomoreparties.sbs',
+    url: 'http://localhost:4000/',
+
 });
 
 export default auth;

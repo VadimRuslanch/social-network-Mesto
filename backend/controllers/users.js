@@ -67,20 +67,23 @@ const createUser = async (req, res, next) => {
   }
 };
 
-const login = async (req, res, next) => {
-  try {
-    const { email, password } = req.body;
-    const user = await User.findUserByCredentials(email, password);
-    const token = jwt.sign(
-      { _id: user._id },
-      config.JWT_SECRET,
-      { expiresIn: '7d' },
-    );
-
-    res.send({ token });
-  } catch (err) {
-    next(err);
-  }
+const login = (req, res, next) => {
+  const { email, password } = req.body;
+  User
+    .findUserByCredentials(email, password)
+    .then((user) => {
+      const token = jwt.sign({ _id: user._id }, config.JWT_SECRET, { expiresIn: '7d' });
+      res
+        .cookie('jwt', token, {
+          maxAge: 36000000,
+          httpOnly: true,
+          sameSite: true,
+        });
+      res
+        .status(200)
+        .send(user);
+    })
+    .catch(next);
 };
 
 const editProfile = async (req, res, next) => {

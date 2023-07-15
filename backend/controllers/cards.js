@@ -18,7 +18,6 @@ const createCard = async (req, res, next) => {
 
 const getCards = async (req, res, next) => {
   try {
-    console.log(Card.find({}));
     const cards = await Card.find({});
     res.send(cards);
   } catch (err) { next(err); }
@@ -26,7 +25,7 @@ const getCards = async (req, res, next) => {
 
 const deleteCard = async (req, res, next) => {
   try {
-    const card = await Card.findById(req.params.id);
+    const card = await Card.findById(req.params.cardId);
 
     if (!card) {
       throw new NotFoundError('Карточка с указанным _id не найдена.');
@@ -48,39 +47,36 @@ const deleteCard = async (req, res, next) => {
   }
 };
 
-const handleCardLike = async (req, res, next) => {
+const handleCardLike = async (req, res, method, next) => {
   try {
-    let action;
+    const { cardId } = req.params;
 
-    if (req.method === 'PUT') {
-      action = '$addToSet';
-    }
-
-    if (req.method === 'DELETE') {
-      action = '$pull';
-    }
     const card = await Card.findByIdAndUpdate(
-      req.params.id,
-      { [action]: { likes: req.user._id } },
+      cardId,
+      { [method]: { likes: req.user._id } },
       { new: true },
     );
-    if (!card) {
+
+    if (card === null) {
       throw new NotFoundError('Передан несуществующий _id карточки.');
     }
-
-    res.send(card);
+    return res.send(card);
   } catch (err) {
     if (err.name === 'CastError') {
       next(new BadRequestError('Переданы некорректные данные для постановки/снятии лайка.'));
-    } else {
-      next(err);
     }
+    return next(err);
   }
 };
+
+const likeCard = (req, res) => handleCardLike(req, res, '$addToSet');
+const deleteLikeCard = (req, res) => handleCardLike(req, res, '$pull');
 
 module.exports = {
   getCards,
   createCard,
   deleteCard,
   handleCardLike,
+  likeCard,
+  deleteLikeCard,
 };

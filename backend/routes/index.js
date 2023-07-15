@@ -18,8 +18,8 @@ router.post('/signup', validationCreateUser, createUser);
 
 router.use(auth);
 
-router.use('/users', usersRouter);
 router.use('/cards', cardsRouter);
+router.use('/users', usersRouter);
 router.use('*', (req, res, next) => {
   next(new NotFoundError('Такая страница не существует'));
 });

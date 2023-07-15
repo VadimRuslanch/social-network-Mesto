@@ -40,28 +40,27 @@ export default function App() {
         setCurrentUser(userData)
         setCards(initialCards)
       })
-      .catch(err => { throw new Error(err.message) })
-
-      const token = localStorage.getItem("token");
-
-    if (token) {
-      auth
-        .checkToken(token)
-        .then((res) => {
-          setIsLoggedIn(true);
+      .catch(err => { throw new Error(err.message) });
+    auth
+      .checkToken()
+      .then((res) => {
+        if (res) {
           setEmail(res.email);
+          setIsLoggedIn(true);
           navigate('/');
-        })
-        .catch(err => { throw new Error(err.message) });
-    }
+        } else {
+          setIsLoggedIn(false);
+        }
+      })
+      .catch(err => { throw new Error(err.message) });
+
   }, [setCurrentUser, setCards, setIsLoggedIn, setEmail, navigate])
 
   function handleLogin(userData) {
     auth
       .authorization(userData)
       .then((res) => {
-        if (res.token) {
-          localStorage.setItem('token', res.token);
+        if (res) {
           setIsLoggedIn(true);
           navigate('/');
         } else {
@@ -71,8 +70,7 @@ export default function App() {
       .catch(res => { throw new Error(res.message) });
   };
 
-  function handleLogout() {
-    localStorage.removeItem('token');
+  function handleLogOut() {
     setIsLoggedIn(false);
     navigate('/signin')
   }
@@ -124,7 +122,7 @@ export default function App() {
   };
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i === currentUser._id);
     api
       .changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
@@ -191,7 +189,7 @@ export default function App() {
                   onCardClick={handleCardClick}
                   onCardLike={handleCardLike}
                   onDeliteClick={handleDeleteClick}
-                  onSignOut={handleLogout}
+                  onSignOut={handleLogOut}
                 />
               }
             />

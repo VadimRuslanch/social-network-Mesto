@@ -2,10 +2,11 @@ require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { errors } = require('celebrate');
-const handleError = require('./middlewares/handleError');
+// const handleError = require('./middlewares/handleError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const router = require('./routes');
 const config = require('./config');
@@ -25,9 +26,11 @@ const startServer = async () => {
   }
 };
 
-app.use(cors());
+app.use(cookieParser());
 
 app.use(bodyParser.json());
+
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 app.use(requestLogger);
 
@@ -37,6 +40,6 @@ app.use(errorLogger);
 
 app.use(errors());
 
-app.use(handleError);
+// app.use(handleError);
 
 startServer();
