@@ -26,7 +26,8 @@ const startServer = async () => {
   }
 };
 
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+// app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors({ origin: 'https://api.vadim-lebedev.mesto.nomoreparties.sbs', credentials: true }));
 
 app.use(cookieParser());
 
