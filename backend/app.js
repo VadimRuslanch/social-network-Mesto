@@ -6,7 +6,6 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { errors } = require('celebrate');
-// const handleError = require('./middlewares/handleError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const router = require('./routes');
 const config = require('./config');
@@ -26,8 +25,14 @@ const startServer = async () => {
   }
 };
 
-// app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
-app.use(cors({ origin: 'https://api.vadim-lebedev.mesto.nomoreparties.sbs', credentials: true }));
+// app.use(cors({
+//   origin: 'http://localhost:3000',
+//   credentials: true,
+// }));
+app.use(cors({
+  origin: 'https://vadim-lebedev.mesto.nomoreparties.sbs',
+  credentials: true,
+}));
 
 app.use(cookieParser());
 
