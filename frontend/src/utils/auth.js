@@ -49,8 +49,8 @@ class Api {
 };
 
 const auth = new Api({
-    // url: 'https://api.vadim-lebedev.mesto.nomoreparties.sbs',
-    url: 'http://localhost:4000/',
+    url: 'https://api.vadim-lebedev.mesto.nomoreparties.sbs/',
+    // url: 'http://localhost:4000/',
 
 });
 
