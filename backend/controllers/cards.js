@@ -12,7 +12,9 @@ const createCard = async (req, res, next) => {
   } catch (err) {
     if (err.name === 'ValidationError') {
       next(new BadRequestError('Переданы некорректные данные при создании карточки.'));
-    } else { next(err); }
+    } else {
+      next(err);
+    }
   }
 };
 
@@ -26,17 +28,13 @@ const getCards = async (req, res, next) => {
 const deleteCard = async (req, res, next) => {
   try {
     const card = await Card.findById(req.params.cardId);
-
     if (!card) {
       throw new NotFoundError('Карточка с указанным _id не найдена.');
     }
-
     if (card.owner.toString() !== req.user._id) {
       throw new ForbiddenError('Нельзя удалить чужую карточку.');
     }
-
     await card.deleteOne();
-
     res.send(card);
   } catch (err) {
     if (err.name === 'CastError') {
@@ -50,22 +48,21 @@ const deleteCard = async (req, res, next) => {
 const handleCardLike = async (req, res, method, next) => {
   try {
     const { cardId } = req.params;
-
     const card = await Card.findByIdAndUpdate(
       cardId,
       { [method]: { likes: req.user._id } },
       { new: true },
     );
-
     if (card === null) {
       throw new NotFoundError('Передан несуществующий _id карточки.');
     }
-    return res.send(card);
+    res.send(card);
   } catch (err) {
     if (err.name === 'CastError') {
       next(new BadRequestError('Переданы некорректные данные для постановки/снятии лайка.'));
+    } else {
+      next(err);
     }
-    return next(err);
   }
 };
 

@@ -3,7 +3,6 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -29,6 +28,7 @@ const startServer = async () => {
 //   origin: 'http://localhost:3000',
 //   credentials: true,
 // }));
+
 app.use(cors({
   origin: 'https://vadim-lebedev.mesto.nomoreparties.sbs',
   credentials: true,
@@ -36,7 +36,7 @@ app.use(cors({
 
 app.use(cookieParser());
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.use(requestLogger);
 

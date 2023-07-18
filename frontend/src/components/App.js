@@ -58,7 +58,7 @@ export default function App() {
 
   function handleLogin(userData) {
     auth
-      .authorization(userData)
+      .login(userData)
       .then((res) => {
         if (res) {
           setIsLoggedIn(true);
@@ -71,6 +71,8 @@ export default function App() {
   };
 
   function handleLogOut() {
+    // auth
+    // .logout();
     setIsLoggedIn(false);
     navigate('/signin')
   }

@@ -105,7 +105,6 @@ const editProfile = async (req, res, next) => {
     if (!user) {
       throw new NotFoundError('Пользователь с указанным _id не найден.');
     }
-
     res.send(user);
   } catch (err) {
     if (err.name === 'ValidationError') {
@@ -118,25 +117,10 @@ const editProfile = async (req, res, next) => {
   }
 };
 
-const getCurrentUser = (req, res, next) => {
-  User
-    .findById(req.user._id)
-    .orFail(() => {
-      throw new NotFoundError(`Пользователь c id: ${req.user._id} не найден`);
-    })
-    .then((user) => res.status(200).send(user))
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        next(BadRequestError('Переданы некорректные данные'));
-      } else next(err);
-    });
-};
-
 module.exports = {
   getUsers,
   getUserById,
   editProfile,
-  getCurrentUser,
   login,
   createUser,
 };

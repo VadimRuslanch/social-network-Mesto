@@ -9,7 +9,7 @@ class Api {
     }
     // Регистрация пользователя
     register({ email, password }) {
-        return fetch(`${this._url}signup`, {
+        return fetch(`${this._url}/signup`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -21,8 +21,8 @@ class Api {
             .catch(res => { return this._getErrorFromServer(res) })
     };
     // Авторизация пользователя
-    authorization({ email, password }) {
-        return fetch(`${this._url}signin`, {
+    login({ email, password }) {
+        return fetch(`${this._url}/signin`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -33,9 +33,15 @@ class Api {
             .then(res => { return res.json() })
             .catch(res => { return this._getErrorFromServer(res) })
     };
+
+    // Выход из аккаунтв пользователя
+    // logout(){
+    //     return fetch(`${this._url}/`)
+    // }
+
     // Проверка токена пользователя для автологина
     checkToken() {
-        return fetch(`${this._url}users/me`, {
+        return fetch(`${this._url}/users/me`, {
             method: 'GET',
             headers: {
                 "Accept": "application/json",
@@ -49,8 +55,8 @@ class Api {
 };
 
 const auth = new Api({
-    url: 'https://api.vadim-lebedev.mesto.nomoreparties.sbs/',
-    // url: 'http://localhost:4000/',
+    url: 'https://api.vadim-lebedev.mesto.nomoreparties.sbs',
+    // url: 'http://localhost:4000',
 
 });
 
