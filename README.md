@@ -12,6 +12,6 @@
   <li>mongoDB</li>
 </ul>
 
-Ссылка на сайт: vadim-lebedev.mesto.nomoreparties.sbs
+<a herf="https://vadim-lebedev.mesto.nomoreparties.sbs" target='_blank' rel="noopener noreferrer">Ссылка на сайт</a> 
 
 
