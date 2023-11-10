@@ -12,6 +12,4 @@
   <li>mongoDB</li>
 </ul>
 
-Ссылка на сайт: https://vadim-lebedev.mesto.nomoreparties.sbs 
-
 
