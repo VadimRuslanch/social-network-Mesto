@@ -8,6 +8,7 @@
   <li>CSS</li>
   <li>JS</li>
   <li>React</li>
+  <li>Node</li>
   <li>Express.js</li>
   <li>mongoDB</li>
 </ul>
